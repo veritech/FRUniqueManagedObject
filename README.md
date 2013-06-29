@@ -18,6 +18,7 @@ Usage
 Firstly you need to override the uniqueKeyPath and entityName methods to refect the unique keypath of your managedObject and entityName respectively.
 
 Then where ever you import data you will call this method:
+
 	+ (NSArray *)allUniqueObjectsWith:(NSArray *)newObjects
 	                    uniqueKeyPath:(NSString *)aKeypath
 	             managedObjectContext:(NSManagedObjectContext *)aMoc
