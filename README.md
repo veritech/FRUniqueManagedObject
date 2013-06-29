@@ -41,4 +41,4 @@ License
 
 Author
 ------
-Jonathan Dalrymple [email](jonathan@float-right.co.uk) [twitter](http://twitter.com/veritech)
+Jonathan Dalrymple [email](mailto:jonathan@float-right.co.uk) [twitter](http://twitter.com/veritech)
