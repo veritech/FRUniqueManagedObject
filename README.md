@@ -7,10 +7,10 @@ At the moment it has a few limitations:
 
 * Only one property can be used to test for uniqueness, at the moment this must be a string
 * The objects are loaded (faulted) rather than just the unique ID value for each
-* While it's multi-threaded the search method does not return until the work is complete
-* It has a obvious bottle neck in the form a Lock around a mutable collection.
+* While it is multi-threaded, the search method does not return until the work is complete
+* It has a obvious bottle neck in the of form a Lock around a mutable collection.
 
-This is main a proof of concept, and a request for comments on how to improve the performance and the flexibility of the code.
+This is mainly a proof of concept, and a request for comments on how to improve the performance and the flexibility of the code.
 
 Usage
 -----
