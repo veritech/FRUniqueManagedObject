@@ -1,6 +1,6 @@
-#import "NSManagedObject+unique.h"
+#import "FRUniqueManagedObject.h"
 
-@implementation NSManagedObjectUnique
+@implementation FRUniqueManagedObject
 
 + (NSString *)uniqueKeypath {
   return nil;
@@ -82,6 +82,51 @@
   
   //Dervive a new array based on the unique indexes
   return [newObjects objectsAtIndexes:uniqueIndexes];
+}
+
++ (NSArray *)allDuplicatesWithManagedObjectContext:(NSManagedObjectContext *)aMoc
+                                           options:(FRUniqueManagedObjectOptions)options {
+    
+    NSFetchRequest *fetchRequest;
+    NSArray *fetchedObjects;
+    NSMutableIndexSet *duplicateObjectIndexes;
+    NSMutableSet *knownHashes;
+    NSError *error;
+    
+    fetchRequest = [NSFetchRequest fetchRequestWithEntityName:[self entityName]];
+    
+    //Attempt to sort objects
+    [fetchRequest setSortDescriptors:@[[NSSortDescriptor sortDescriptorWithKey:[self uniqueKeypath]
+                                                                     ascending:YES]]];
+    
+    [fetchRequest setReturnsObjectsAsFaults:YES];
+    
+    if (!(fetchedObjects = [aMoc executeFetchRequest:fetchRequest error:&error])) {
+        NSLog(@"Fetch error %@",error);
+    }
+    
+    //Store the known hashes
+    knownHashes = [NSMutableSet setWithCapacity:[fetchedObjects count]];
+    
+    /**
+     *  This is very basic dupe search
+     *  in future we want to use the options param to allow
+     */
+    
+    //Iterate over the objects and find the dupes
+    for (NSUInteger idx = 0; idx < [fetchedObjects count]; idx++) {
+        
+        //If the hash is known, add to the dupes
+        if ([knownHashes member:[[fetchedObjects objectAtIndex:idx] valueForKeyPath:[self uniqueKeypath]]]) {
+            [duplicateObjectIndexes addIndex:idx];
+        }
+        else { //If it is not known, add to the known hashes
+            [knownHashes addObject:[[fetchedObjects objectAtIndex:idx] valueForKeyPath:[self uniqueKeypath]]];
+        }
+        
+    }
+    
+    return [fetchedObjects objectsAtIndexes:duplicateObjectIndexes];
 }
 
 

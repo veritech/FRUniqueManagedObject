@@ -1,5 +1,5 @@
-NSManagedObject+Unique
-----------------------
+FRUniqueManagedObject
+---------------------
 
 This project is a "simple" abstract subclass of NSManagedObject to test objects to see if they are new entities or if similar entities exists.
 
