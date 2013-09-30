@@ -5,9 +5,9 @@ This project is a "simple" abstract subclass of NSManagedObject to test objects 
 
 At the moment it has a few limitations:
 
-* Only one property can be used to test for uniqueness, at the moment this must be a string
+* Only one property can be used to test for uniqueness, at the moment this must conform to NSCopying, and respond correctly to isEqual: (ie. NSNumber,NSString)
 * The objects are loaded (faulted) rather than just the unique ID value for each
-* While it is multi-threaded, the search method does not return until the work is complete
+* While it is multi-threaded, the search method does not return until the work is complete, however you could spin up a threaded MOC, and DIY.
 * It has a obvious bottle neck in the of form a Lock around a mutable collection.
 
 This is mainly a proof of concept, and a request for comments on how to improve the performance and the flexibility of the code.
@@ -15,7 +15,7 @@ This is mainly a proof of concept, and a request for comments on how to improve 
 Usage
 -----
 
-Firstly you need to override the uniqueKeyPath and entityName methods to refect the unique keypath of your managedObject and entityName respectively.
+Firstly you need to override the ***uniqueKeyPath*** and ***entityName*** methods to refect the unique keypath of your managedObject and entityName respectively.
 
 Then where ever you import data you will call this method:
 
